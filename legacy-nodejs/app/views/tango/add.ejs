@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="背单词用的">
+    <title>
+        とある科学の超単語帳
+    </title>
+    <%- include('common/css'); %>
+
+</head>
+
+<body>
+    <%- include('common/tango-nav'); %>
+
+
+    <main class="container">
+        <div class="row">
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <select multiple id="hinshi">
+                    <option value="" disabled selected>品詞</option>
+                    <option value="mei">名</option>
+                    <option value="ji">自</option>
+                    <option value="ta">他</option>
+                    <option value="sa">サ</option>
+                    <option value="go">五</option>
+                    <option value="ichi">一</option>
+                    <option value="kei">形</option>
+                    <option value="keidou">形動</option>
+                    <option value="fuku">副</option>
+                    <option value="setsubigo">接尾</option>
+                    <option value="kan">感</option>
+                    <option value="setsuzoku">接続</option>
+                    <option value="rentai">連体</option>
+                </select>
+            </div>
+            <div class="input-field col s12 m6">
+                <input id="akusento" type="text" class="">
+                <label for="akusento">アクセント</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <input id="hiragana" type="text" class="" lang="ja">
+                <label for="hiragana">ひらがな</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input id="kanji" type="text" class="" lang="ja">
+                <label for="kanji">漢字</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea id="imi" class="materialize-textarea "></textarea>
+                <label for="imi">意味・例文</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6 m3">
+                <input type="checkbox" id="yomikata" />
+                <label for="yomikata">読み方</label>
+            </div>
+            <div class="input-field col s6 m3">
+                <input type="checkbox" id="tsukaikata" />
+                <label for="tsukaikata">使い方</label>
+            </div>
+            <div class="input-field col s6 m3">
+                <input type="checkbox" id="bunpou" />
+                <label for="bunpou">文法</label>
+            </div>
+            <div class="input-field col s6 m3">
+                <input type="checkbox" id="furansugo" />
+                <label for="furansugo">フランス語</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p>
+                    注:
+                </p>
+                <p>
+                    1. 释义、例句处每行为一个释义，释义后如果有例句，例句用[]括起来，正斜杠后为中文翻译。
+                </p>
+                <p>
+                    2. 添加文法时，accent、词性不填，平假名处填文法标题，汉字处填用法，释义、例句同上。
+                </p>
+                <p>
+                    3. 法语单词accent处填阴阳性，hiragana填单词，如果有阴阳性变形则用正斜杠分开，kanji填词性。
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s4">
+                <a class="btn waves-effect waves-light <%= main_color %>" onclick="submit();">確認
+                    <i class="material-icons right">send</i>
+                </a>
+            </div>
+        </div>
+    </main>
+    <div class="divider container"></div>
+
+    <%- include('common/commonjs'); %>
+    <script type="text/javascript">
+    $(document).ready(function() { $('select').material_select(); });
+
+    function submit() {
+        var hinshi = $('#hinshi').val();
+        if (hinshi != null)
+            hinshi = hinshi.join(' ');
+        else
+            hinshi = '';
+        var kanji = $('#kanji').val();
+        var a = $('#akusento').val();
+        var akusento = "０１２３４５６７８９".indexOf(a);
+        akusento = akusento >= 0 ? akusento : a;
+        if (a == '') akusento = '';
+        var hiragana = $('#hiragana').val();
+        var imi = $('#imi').val();
+        imi = imi.split('【').join('[');
+        imi = imi.split('】').join(']');
+        imi = imi.split('「').join('[');
+        imi = imi.split('」').join(']');
+        var yomikata = $('#yomikata')[0].checked;
+        var tsukaikata = $('#tsukaikata')[0].checked;
+        var bunpou = $('#bunpou')[0].checked;
+        var furansugo = $('#furansugo')[0].checked;
+
+        if (yomikata == tsukaikata && tsukaikata == bunpou && bunpou == furansugo) {
+            Materialize.toast('选择考察类型', 1000);
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Tango/AddWord',
+            data: {
+                hinshi: hinshi,
+                kanji: kanji,
+                akusento: akusento,
+                hiragana: hiragana,
+                imi: imi,
+                yomikata: yomikata,
+                tsukaikata: tsukaikata,
+                bunpou: bunpou,
+                furansugo: furansugo,
+                password: localStorage.password
+            },
+            success: function(data) {
+                Materialize.toast(data, 1000);
+                if (data == "success") {
+                    $('#hinshi').val([]).material_select();
+                    $('#kanji').val('');
+                    $('#akusento').val('');
+                    $('#hiragana').val('');
+                    $('#imi').val('');
+                    $('#yomikata')[0].checked = false;
+                    $('#tsukaikata')[0].checked = false;
+                    $('#bunpou')[0].checked = false;
+                    $('#furansugo')[0].checked = false;
+                }
+            }
+        });
+    }
+    </script>
+
+</body>
+
+</html>

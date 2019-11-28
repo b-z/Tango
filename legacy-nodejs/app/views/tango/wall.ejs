@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="背单词用的">
+    <title>
+        とある科学の超単語帳
+    </title>
+    <%- include('../common/css'); %>
+    <link rel="stylesheet" href="css/tango_chart.css">
+    <link rel="stylesheet" href="css/tango.css">
+    <% var colors_ = ['#cccccc', 'rgb(244, 67, 54)', 'rgb(255, 152, 0)', 'rgb(255, 193, 7)', 'rgb(255, 235, 59)', 'rgb(139, 195, 74)', 'rgb(76, 175, 80)', '#00bcd4']; %>
+    <style media="screen">
+        <% for (var i = 0; i < 8; i++) { %>
+            #label_box_<%= i %>:after {
+                border: 2px solid <%- colors_[i] %>;
+                background-color: <%- colors_[i] %>;
+            }
+        <% } %>
+    </style>
+</head>
+
+<body>
+    <%- include('../common/tango-nav'); %>
+    <% var colors = ['grey', 'red', 'orange', 'amber', 'yellow', 'light-green', 'green', 'cyan']; %>
+    <main class="container">
+        <div class="row section">
+            <h5>按词性筛选</h5>
+        </div>
+
+        <div class="row section">
+            <h5>按熟练度筛选</h5>
+            <% for (var i = 0; i < 8; i++) { %>
+                <input type="checkbox" class="filled-in" id="label_<%= i %>" checked="checked" />
+                <label id="label_box_<%= i %>" for="label_<%= i %>">
+                    <div class="word-count">
+                        test
+                    </div>
+                </label>
+            <% } %>
+        </div>
+
+        <div class="row word-wall section">
+            <% for (var i = 0; i < words.length; i++) { %>
+                <% if (words[i].furansugo == 'false') { %>
+                    <% var color = (words[i].added == 'false' || words[i].history.length == 0) ? 'grey' : colors[words[i].level + 1] %>
+                    <div class="col s4 m3 l2 review-<%= color %> <%= words[i].bunpou == 'true' ? 'bunpou' : words[i].hinshi %>">
+                        <a class="valign-wrapper card white lighten-3" lang="ja" href="/Tango?page=word&id=<%= words[i].id %>">
+                            <div class="corner <%= color %>"></div>
+                            <span>
+                                <% if (words[i].kanji.length == 0 || /[a-zA-Z]/.test(words[i].kanji) || words[i].bunpou == 'true') { %>
+                                    <%= words[i].hiragana %>
+                                <% } else { %>
+                                    <%= words[i].kanji %>
+                                <% } %>
+                            </span>
+                        </a>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="js/tango-chart.js"></script>
+    <script type="text/javascript">
+
+    </script>
+
+</body>
+
+</html>

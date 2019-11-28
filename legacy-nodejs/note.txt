@@ -1,0 +1,14 @@
+# build:
+docker build -t tango-nodejs .
+
+# run:
+docker container run -p 3000:80 -it tango-nodejs
+
+# get accessible ip:
+kubectl describe node minikube | grep IP
+
+# or, use this, to launch service on the browser:
+minikube service tango-nodejs-service
+
+# restart deployment
+kubectl rollout restart deployment tango-nodejs-deployment

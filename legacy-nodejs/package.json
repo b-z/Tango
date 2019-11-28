@@ -1,0 +1,13 @@
+{
+  "name": "Tango",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd app && node app.js"
+  },
+  "dependencies": {
+    "express": "latest",
+    "ejs": "latest",
+    "mongojs": "latest"
+  }
+}

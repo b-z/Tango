@@ -1,0 +1,131 @@
+<div id="language" class="hide"><%= str.language_s %></div>
+
+<ul id="choose_language" class="dropdown-content">
+    <li><a class="<%= second_color %>-text text-darken-2" href="?lang=zh">🇨🇳 中文</a></li>
+    <li><a class="<%= second_color %>-text text-darken-2" href="?lang=ja">🇯🇵 日本語</a></li>
+    <li><a class="<%= second_color %>-text text-darken-2" href="?lang=en">🇬🇧 English</a></li>
+    <!--li><a class="<%= second_color %>-text text-darken-2" href="?lang=ko">한국어🇰🇷</a></li-->
+    <!-- <li><a class="<%= second_color %>-text text-darken-2" href="?lang=es">🇪🇸 Español</a></li> -->
+</ul>
+<nav class="nav-extended <%= main_color %> lighten-1">
+    <!-- background -->
+
+    <div class="nav-background">
+        <div class="pattern active" style="background-image: url('img/icon-seamless.png');"></div>
+    </div>
+
+    <!-- navbar & title -->
+
+    <div class="nav-wrapper container">
+        <a class="brand-logo">Bówēi.me</a>
+        <a data-activates="slide-out" class="button-collapse collapse">
+            <div class="side-menu">&nbsp;</div>
+        </a>
+        <ul class="right hide-on-small-only">
+            <li class="hide-on-med-and-down">
+                <a href="/?lang=<%= str.language_s %>">
+                    <%= str.home %>
+                    <span class="home-icon nav-icon">&nbsp;</span>
+                </a>
+            </li>
+            <li class="hide-on-med-and-down">
+                <a href="projects?lang=<%= str.language_s %>">
+                    <%= str.projects %>
+                    <span class="blog-icon nav-icon">&nbsp;</span>
+                </a>
+            </li>
+            <li class="hide-on-med-and-down">
+                <a href="aboutme?lang=<%= str.language_s %>">
+                    <%= str.about_me %>
+                    <span class="aboutme-icon nav-icon">&nbsp;</span>
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-button" href="" data-beloworigin="true"  data-activates="choose_language" data-hover="false">
+                    Language
+                    <!-- <span class="language-icon nav-icon">&nbsp;</span> -->
+                    <span class="dropdown-icon nav-icon">&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="nav-header center">
+        <% if (page == 'homepage') { %>
+        <h1 class="page-<%= page %>"><b><%- str.title %></b></h1>
+        <div class="tagline">
+            <%= str.hello1 %>
+            <%= viewcount %>
+            <%= str.hello2 %>
+            <%= str.online1 %><span id="online_user"><%= online %></span><%= str.online2 %>
+        </div>
+        <% } else if (page == 'projects') { %>
+        <h1 class="page-<%= page %>"><b><%= str.projects %></b></h1>
+        <div class="tagline">
+            <%= str.project_description %>
+        </div>
+        <% } else if (page == 'about') { %>
+        <h1 class="page-<%= page %>"><b><%= str.about_me %></b></h1>
+        <div class="tagline">
+            <%- str.about_description %>
+        </div>
+        <% } %>
+    </div>
+    <% if (page == 'projects') { %>
+    <div class="nav-content">
+        <div class="pin <%= main_color %> darken-1">
+            <div class="container">
+                <ul class="tabs tabs-transparent">
+                    <li class="tab"><a class="active" onclick="filter('all');">全部</a></li>
+                    <li class="tab"><a onclick="filter('cg');">图形图像</a></li>
+                    <li class="tab"><a onclick="filter('fe');">前端</a></li>
+                    <li class="tab"><a onclick="filter('gm');">小游戏</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</nav>
+
+<!-- <grey id="error_load">JavaScript没有被正确加载&gt;&lt; 请刷新或关闭隐身模式或更换浏览器。</grey> -->
+<!-- 滑出的菜单 -->
+<ul id="slide-out" class="side-nav">
+    <li class="no-padding bold">
+        <a class="waves-effect waves-main" href="/?lang=<%= str.language_s %>">
+            <span class="home-sidenav-icon sidenav-icon">&nbsp;</span>
+            <%= str.home %>
+        </a>
+    </li>
+    <li class="no-padding hide-on-med-only">
+        <ul class="collapsible collapsible-accordion">
+            <li>
+                <a class="active collapsible-header waves-effect waves-main">
+                    <span class="language-sidenav-icon sidenav-icon">&nbsp;</span>
+                    Language
+                </a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="?lang=zh">🇨🇳 中文</a></li>
+                        <li><a href="?lang=ja">🇯🇵 日本語</a></li>
+                        <li><a href="?lang=en">🇬🇧 English</a></li>
+                        <!--li><a href="?lang=ko">한국어🇰🇷</a></li-->
+                        <!--li><a href="?lang=es">🇪🇸 Español</a></li-->
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="no-padding bold">
+        <a class="waves-effect waves-main" href="projects?lang=<%= str.language_s %>">
+            <span class="blog-sidenav-icon sidenav-icon">&nbsp;</span>
+            <%= str.projects %>
+        </a>
+    </li>
+    <li class="no-padding bold">
+        <a class="waves-effect waves-main" href="aboutme?lang=<%= str.language_s %>">
+            <span class="aboutme-sidenav-icon sidenav-icon">&nbsp;</span>
+            <%= str.about_me %>
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,226 @@
+.collection.words .mw {
+	min-width: 8rem;
+	display: inline-block;
+}
+
+.review.secondary-content {
+	width: 4rem;
+	text-align: center;
+}
+
+.review.secondary-content div {
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	margin: auto;
+}
+
+#percentage {
+	width: 100%;
+	height: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+.word-count {
+	/*margin-top: 3.5px;
+    margin-bottom: 3.5px;*/
+	float: left;
+	color: #9e9e9e;
+	margin-right: 1rem;
+	line-height: 20px;
+}
+
+.word-count div {
+	float: left;
+	width: 18px;
+	height: 18px;
+	margin-right: 0.5rem;
+}
+
+#statistics_btn {
+	margin: 1rem 0;
+}
+
+#statistics {
+	display: none;
+	text-align: center;
+}
+
+.bunpou .title, .tango .title, .furansugo .title {
+	font-size: 2.5rem;
+	line-height: 4rem;
+	float: left;
+	margin: 10px 15px;
+	position: relative;
+}
+
+.tango .kanji, .furansugo .title2 {
+	font-size: 2rem;
+	line-height: 4rem;
+	float: left;
+	margin: 10px 0;
+}
+
+.furansugo .title2 {
+	font-size: 2.5rem;
+}
+
+.bunpou .tsukaikata {
+	font-size: 1.5rem;
+	line-height: 3rem;
+	float: left;
+	margin: 0 0 10px 15px;
+}
+
+.tango .title canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+.tango .akusento {
+	background-color: #757575;
+	color: white;
+	border-radius: 50%;
+	float: left;
+	width: 1.5rem;
+	height: 1.5rem;
+	text-align: center;
+	line-height: 1.5rem;
+	margin: 0 0 15px 15px;
+}
+
+.tango .hinshi, .furansugo .akusento, .furansugo .hinshi {
+	background-color: #757575;
+	color: white;
+	border-radius: 0.75rem;
+	float: left;
+	height: 1.5rem;
+	text-align: center;
+	line-height: 1.5rem;
+	margin: 0 15px 15px;
+	padding: 0 0.75rem;
+}
+
+.clear {
+	clear: both;
+}
+
+.reibun {
+	padding: 5px 15px;
+	color: #424242;
+}
+
+.honyaku {
+	padding: 0 15px;
+	color: #bbbbbb;
+}
+
+.footer-buttons {
+	position: fixed;
+	bottom: 1rem;
+	width: 100%;
+	/*padding: 0 5%;*/
+}
+
+.footer-buttons a {
+	width: 100%;
+}
+
+:lang(ja) {
+	font-family: serif;
+}
+
+main {
+	position: relative;
+	/* margin-bottom: 6rem !important; */
+}
+
+.btn-floating.halfway-fab {
+	right: 0;
+	top: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+rt {
+	color: #757575;
+	/*transform: scale(0.8);*/
+}
+
+:lang(fr) rt {
+	font-family: serif;
+}
+
+.reibun grey {
+	margin-left: 1rem;
+	font-family: serif;
+}
+
+.reviews .min-width {
+	min-width: 7rem;
+	float: right;
+}
+
+.navbar-container {
+	z-index: 2;
+}
+
+.mask {
+	padding-top: 1rem;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+	z-index: 1;
+	font-size: 1.5rem;
+	line-height: 4rem;
+}
+
+.mask .title_test {
+	font-size: 2.5rem;
+	line-height: 5rem;
+}
+
+.counter {
+	color: white;
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	z-index: 5;
+	font-size: 1.5rem;
+	line-height: 1rem;
+}
+
+.word-wall .card {
+	height: 3rem;
+	margin-bottom: 0.4rem;
+    overflow: hidden;
+    /* text-align: center; */
+    cursor: pointer;
+    padding: 0 0.4rem;
+}
+
+.word-wall .card span {
+    font-family: sans-serif;
+}
+
+.word-wall .col {
+    position: relative;
+}
+
+.corner {
+    position: absolute;
+    right: 0;
+    bottom: -0.75rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-top: 0.75rem solid white;
+    border-bottom: 0.75rem solid white;
+    border-right: 0.75rem solid transparent;
+}

@@ -1,0 +1,59 @@
+red {
+    color: rgb(244, 67, 54);
+}
+pink {
+    color: rgb(233, 30, 99);
+}
+purple {
+    color: rgb(156, 39, 176);
+}
+indigo {
+    color: rgb(63, 81, 181);
+}
+aqua, blue {
+    color: rgb(33, 150, 243);
+}
+cyan {
+    color: rgb(0, 188, 212);
+}
+teal {
+    color: rgb(0, 150, 136);
+}
+green {
+    color: rgb(76, 175, 80);
+}
+lime {
+    color: rgb(205, 220, 57);
+}
+yellow {
+    color: rgb(255, 235, 59);
+}
+amber {
+    color: rgb(255, 193, 7);
+}
+orange {
+    color: rgb(255, 152, 0);
+}
+brown {
+    color: rgb(121, 85, 72);
+}
+grey {
+    color: rgb(158, 158, 158);
+}
+black {
+    background-color: black;
+    color: black;
+}
+black:hover {
+    color: white;
+}
+shadow {
+    text-shadow: 2.5px 1px rgba(0, 0, 0, 0.15);
+}
+
+flip {
+    transform: scaleX(-1);
+    display: block;
+}
+
+/*['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange', 'brown', 'grey', 'blue-grey'];*/

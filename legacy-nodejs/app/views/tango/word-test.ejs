@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="背单词用的">
+    <title>
+        とある科学の超単語帳
+    </title>
+    <%- include('common/css'); %>
+    <link rel="stylesheet" href="css/tango.css">
+    <style media="screen">
+    .setsumei {
+        background-color: white;
+        border-left: 2px solid rgb(<%=color_value %>);
+        font-size: 1.4rem;
+        padding: 5px 15px;
+        color: #424242;
+        margin: 5px 0;
+    }
+    </style>
+</head>
+
+<body>
+    <%- include('common/tango-nav'); %>
+    <% var word={};var count=0; %>
+    <main class="container view-word">
+
+    </main>
+
+    <div class="counter" style="display:none;"><span id="counter1"></span>/<span id="counter2"></span></div>
+    <div class="footer-buttons" style="display:none;">
+        <div class="row container">
+            <div class="col s6 m4">
+                <a id="left_button" class="btn waves-effect waves-light red" onclick="clickButton('madamada');">まだまだ</a>
+            </div>
+            <div class="col s6 m4 offset-m4 right-align">
+                <a id="right_button" class="btn waves-effect waves-light green" onclick="clickButton('maamaa');">まあまあ</a>
+            </div>
+        </div>
+    </div>
+    <%- include('common/commonjs'); %>
+    <script type="text/javascript" src="js/tango-common.js"></script>
+    <script type="text/javascript">
+
+    var review = <%- JSON.stringify(review) %>;
+    console.log(review);
+
+    var second_color = '<%= second_color %>';
+    var color_value_second = 'rgb(<%= color_value_second %>)';
+
+    var words = review.words;
+    var array = [];
+    var pointer = 0;
+    var tested_words = {};
+    var words_ = {};
+
+    $(document).ready(function() {
+        if (review.finished) {
+            words = randomSort(words);
+        }
+        for (var i = 0; i < words.length; i++) {
+            array.push(words[i].id);
+            words_[words[i].id] = words[i];
+        }
+        if (!review.finished) {
+            for (var i = 0; i < review.history.length; i++) {
+                applyHistoryAction(review.history[i]);
+            }
+        }
+        renderCurrentWord();
+    });
+
+    function randomSort(a) {
+        b = [];
+        for (var i = 0; i < a.length; i++) {
+            b.push(Math.random());
+        }
+        for (var i = a.length - 1; i > 0; i--) {
+            for (var j = 0; j < i; j++) {
+                if (b[j] > b[j + 1]) {
+                    var c = b[j];
+                    b[j] = b[j + 1];
+                    b[j + 1] = c;
+                    c = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = c;
+                }
+            }
+        }
+        return a;
+    }
+
+    function renderCurrentWord() {
+        if (pointer < array.length) {
+            renderWord(words_[array[pointer]]);
+        } else if (!review.finished) {
+            $.ajax({
+                type: 'POST',
+                url: '/Tango/TestFinished?time='+review.t,
+                data: {
+                    password: localStorage.password
+                },
+                success: function(data) {
+                    Materialize.toast('Finish!', 2000);
+                    window.location = "/Tango?page=test";
+                }
+            });
+        } else {
+            Materialize.toast('Finish!', 2000);
+            window.location = "/Tango?page=test";
+        }
+    }
+
+    function applyHistoryAction(action) {
+        var id = action.id + '';
+        var u = tested_words[id];
+        if (action.result == 'maamaa') {
+            if (u == undefined) {
+                // 单词第一次测试即通过:
+                tested_words[id] = 2;
+            } else {
+                // 单词之前错过，并且已经连续正确了u次:
+                tested_words[id]++;
+            }
+        } else {
+            tested_words[id] = 0;
+        }
+        u = tested_words[id];
+        switch (u) {
+        case 0:
+            moveWord(4);
+            break;
+        case 1:
+            moveWord(12);
+            break;
+        case 2:
+            break;
+        }
+        pointer++;
+    }
+
+    function moveWord(offset) {
+        array.splice(offset + pointer, 0, array[pointer]);
+    }
+
+    var button_disabled = false;
+
+    function clickButton(result) {
+        if (button_disabled) return;
+        if ($('.mask').css('display') == 'block') return;
+        if (pointer < array.length) {
+            button_disabled = true;
+            $('#left_button,#right_button').addClass('disabled');
+            var action = {
+                id: array[pointer],
+                result: result,
+                is_first: tested_words[array[pointer]] == undefined,
+                password: localStorage.password
+            }
+            if (!review.finished) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Tango/WordTestClicked?time='+review.t,
+                    data: action,
+                    success: function(data) {
+                        applyHistoryAction(action);
+                        renderCurrentWord();
+                        button_disabled = false;
+                        $('#left_button,#right_button').removeClass('disabled');
+                    }
+                });
+            } else {
+                applyHistoryAction(action);
+                renderCurrentWord();
+                button_disabled = false;
+                $('#left_button,#right_button').removeClass('disabled');
+            }
+        }
+    }
+
+    function hideMask() {
+        $('.mask').css('display', 'none');
+        $('.footer-buttons').show();
+    }
+
+    addEventListener('keydown', function(e) {
+        // console.log(e.which);
+        switch (e.which) {
+        case 37:
+            $('#left_button')[0].click();
+            break;
+        case 39:
+            $('#right_button')[0].click();
+            break;
+        case 38:
+        case 40:
+        case 32:
+            hideMask();
+            break;
+        }
+    });
+    </script>
+
+</body>
+
+</html>

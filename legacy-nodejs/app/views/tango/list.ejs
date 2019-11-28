@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="背单词用的">
+    <title>
+        とある科学の超単語帳
+    </title>
+    <%- include('../common/css'); %>
+
+    <link rel="stylesheet" href="css/tango_chart.css">
+    <link rel="stylesheet" href="css/tango.css">
+</head>
+
+<body>
+    <%- include('../common/tango-nav'); %>
+    <div id="statistics" class="hide-on-small-only">
+        <div id="contentDiv"></div>
+        <!-- <canvas id="percentage" width="100px" height="1px"></canvas> -->
+        <div id="word_count"></div>
+        <div style="clear:both;"></div>
+    </div>
+
+    <main class="container">
+        <!-- <a id="statistics_btn" class="hide-on-small-only btn waves-effect waves-light <%= main_color %>" onclick="showStat();">显示统计信息</a> -->
+
+        <div class="collection words">
+            <% for (var i = 0; i < words.length; i++) { %>
+            <a id="word<%= i %>" class="collection-item" href="/Tango?page=word&id=<%= words[i].id %>">
+                <div class="review secondary-content grey-text right-align" lang="zh">
+                    <% if (words[i].added=="false") { %> 未添加
+                    <% } else if (words[i].history.length == 0) { %> 待测试
+                    <% } else if (words[i].level == 0) { %> <div class="red"></div>
+                    <% } else if (words[i].level == 1) { %> <div class="orange"></div>
+                    <% } else if (words[i].level == 2) { %> <div class="amber"></div>
+                    <% } else if (words[i].level == 3) { %> <div class="yellow"></div>
+                    <% } else if (words[i].level == 4) { %> <div class="light-green"></div>
+                    <% } else if (words[i].level == 5) { %> <div class="green"></div>
+                    <% } else if (words[i].level >= 6) { %> <div class="cyan"></div>
+                    <% } %>
+                </div>
+                <div class="mw review secondary-content grey-text right-align hide-on-small-only" lang="zh">
+                    <%= words[i].addtime ? words[i].addtime.toLocaleDateString() : '' %>
+                </div>
+                <div class="mw <%= second_color %>-text" lang="ja"><%= words[i].hiragana %></div>
+                <% if (words[i].furansugo == "true") { %>
+                <div class="mw grey-text" lang="fr">\<%= words[i].ipa.split('\r\n')[0] %> \</div>
+                <% } else { %>
+                <div class="mw grey-text" lang="ja"><%= words[i].kanji %></div>
+                <% } %>
+            </a>
+            <% } %>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="js/tango-chart.js"></script>
+    <script type="text/javascript">
+        var words = <%- JSON.stringify(words) %>;
+        console.log(words);
+        var tmin, tmax;
+        for (var i = 0; i < words.length; i++) {
+            if (words[i].added=="true") {
+                var t = Date.parse(words[i].addtime);
+                t -= 86400000;
+                if (tmin == undefined || tmin > t) tmin = t;
+                if (tmax == undefined || tmax < t) tmax = t;
+            }
+            for (var j = 0; j < words[i].history; j++) {
+                t = words[i].history[j].time;
+                if (tmin == undefined || tmin > t) tmin = t;
+                if (tmax == undefined || tmax < t) tmax = t;
+            }
+        }
+        function drawPercentage() {
+            var colors = ['#cccccc', 'rgb(244, 67, 54)', 'rgb(255, 152, 0)', 'rgb(255, 193, 7)', 'rgb(255, 235, 59)', 'rgb(139, 195, 74)', 'rgb(76, 175, 80)', '#00bcd4'];
+            // var ctx = $('#percentage')[0].getContext('2d');
+            var len = words.length;
+            var pctg = [0, 0, 0, 0, 0, 0, 0, 0];
+            for (var i = 0; i < len; i++) {
+                pctg[(words[i].level > 6 ? 7 : (words[i].level + 1))]++;
+            }
+            for (var i = 0; i < 8; i++) {
+                $('#word_count').append('<input type="checkbox" class="filled-in" id="label_' + i + '" checked="checked" /><label id="label_box_' + i + '" for="label_' + i + '"><div class="word-count">' + pctg[i] + '</div></label>');
+                $('<style>#label_box_' + i + ':after' + '{border: 2px solid ' + colors[i] + ';background-color: ' + colors[i] + ';}</style>').appendTo('head');
+            }
+        }
+
+        function drawChart() {
+            var data = {};
+            var len = words.length;
+            var cdata = [];
+            var pdata = [];
+            for (var i = 0; i < len; i++) {
+                var word = words[i];
+                if (word.added!='true') continue;
+                var h = word.history;
+                var t0 = new Date(Date.parse(word.addtime) - 86400000);
+                pushWordHistory(data, t0, -1, word);
+                var level = 0;
+                for (var j = 0; j < h.length; j++) {
+                    var t = new Date(h[j].time);
+                    pushWordHistory(data, t, h[j].level, word);
+                    // if(h[j].level>4)console.log(h[j].level, word);
+                }
+                /*if (level != word.level) {
+                    console.log(word.id, word.history);
+                    for (var j = h.length-1; j>=0; j--) {
+                        h[j].level = word.level - (h.length-1-j);
+                        if (h[j].level<0)h[j].level=0;
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            id: word.id,
+                            history: JSON.stringify(h)
+                        },
+                        url: '/Tango/EditHistory',
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }*/
+            }
+            var keys = Object.keys(data).sort();
+            var tmp = {};
+            var maxidx = 7;
+            for (var i = 0; i < keys.length; i++) {
+                var date = keys[i];
+                //console.log(date);
+                for (var j in tmp) {
+                    if (data[date][j] == undefined) {
+                        data[date][j] = tmp[j];
+                    }
+                }
+                cdata.push([]);
+                for (var j in data[date]) {
+                    var d = data[date][j];
+                    tmp[j] = d;
+                    var d_ = d+1>7?7:(d+1);
+                    if (cdata[i][d_] == undefined) cdata[i][d_] = 0;
+                    cdata[i][d_]++;
+                }
+            }
+            for (var i = 0; i < keys.length; i++) {
+                var sum = 0;
+                pdata.push([]);
+                for (var j = 0; j <= maxidx; j++) {
+                    if (cdata[i][j] == undefined) cdata[i][j] = 0;
+                    sum += cdata[i][j];
+                }
+                cdata[i] = cdata[i].reverse();
+                for (var j = 0; j <= maxidx; j++) {
+                    pdata[i][j] = cdata[i][j] / sum;
+                }
+            }
+
+            console.log(data, JSON.stringify(cdata));
+            var dqData = [{
+                title:'Product Groups',
+                dP:[['6'],['5'],['4'],['3'],['2'],['1'],['0'],['-1']],
+                distMin:0,
+                distMax:1,
+                dist:cdata,
+                quant:pdata
+            }];
+
+            drawAll(dqData, "contentDiv");
+
+        }
+
+
+
+        function pushWordHistory(data, t, level, word) {
+            var y = '' + t.getFullYear();
+            var m = '' + (1 + t.getMonth());
+            var d = '' + t.getDate();
+            if (m.length == 1) m = '0' + m;
+            if (d.length == 1) d = '0' + d;
+            var t_ = y + '-' + m + '-' + d;
+            if (data[t_] == undefined) {
+                data[t_] = {};
+            }
+            data[t_][word.id] = level;
+        }
+
+        function renderList() {
+
+        }
+
+        function showStat() {
+            drawPercentage();
+            drawChart();
+            $('#statistics_btn').hide();
+            $('#statistics').show();
+        }
+        renderList();
+        showStat();
+    </script>
+
+</body>
+
+</html>

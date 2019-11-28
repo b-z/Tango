@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="背单词用的">
+    <title>
+        とある科学の超単語帳
+    </title>
+    <%- include('common/css'); %>
+    <link rel="stylesheet" href="css/tango.css">
+</head>
+
+<body>
+    <%- include('common/tango-nav'); %>
+
+
+    <main class="container">
+    <h5>今天的测试</h5>
+    <% if (!no_today) { %>
+    <% var i = reviews.length - 1; %>
+    <div class="collection reviews">
+        <a id="review_today" class="collection-item" href="/Tango?page=test&time=<%= reviews[i].t %>">
+            <div class="right right-align">
+                <grey>已测试: &nbsp;</grey>
+                <span class="<%= second_color %>-text"><%= reviews[i].tested %> / <%= reviews[i].words.length %></span>
+                <% if (reviews[i].tested > 0) { %>
+                <div class="min-width">
+                    <grey>正确率: &nbsp;</grey>
+                    <span class="<%= second_color %>-text"><%= Math.round(100*reviews[i].correct/reviews[i].tested) %>%</span>
+                </div>
+                <% } %>
+            </div>
+            <div>
+                <grey><span class="hide-on-small-only"><%= reviews[i].y %>年</span><%= reviews[i].m %>月<%= reviews[i].d %>日</grey>
+            </div>
+        </a>
+    </div>
+    <% } else { %>
+    <a class="btn waves-effect waves-light <%= main_color %>" onclick="generateTest();">生成今日测试</a>
+    <% } %>
+    <h5>专题测试</h5>
+    <span>仅用来测试，不会影响对应单词的熟练度评分。</span>
+    <div class="collection reviews">
+        <a id="review_kei" class="collection-item" href="/Tango?page=test&type=kei">
+            <div>
+                <grey>形容詞</grey>
+            </div>
+        </a>
+        <a id="review_keidou" class="collection-item" href="/Tango?page=test&type=keidou">
+            <div>
+                <grey>形容動詞</grey>
+            </div>
+        </a>
+        <a id="review_go" class="collection-item" href="/Tango?page=test&type=go">
+            <div>
+                <grey>五段動詞</grey>
+            </div>
+        </a>
+        <a id="review_ichi" class="collection-item" href="/Tango?page=test&type=ichi">
+            <div>
+                <grey>一段動詞</grey>
+            </div>
+        </a>
+        <a id="review_sa" class="collection-item" href="/Tango?page=test&type=sa">
+            <div>
+                <grey>サ行変格活用動詞</grey>
+            </div>
+        </a>
+        <a id="review_ji" class="collection-item" href="/Tango?page=test&type=ji">
+            <div>
+                <grey>自動詞</grey>
+            </div>
+        </a>
+        <a id="review_ta" class="collection-item" href="/Tango?page=test&type=ta">
+            <div>
+                <grey>他動詞</grey>
+            </div>
+        </a>
+        <a id="review_fuku" class="collection-item" href="/Tango?page=test&type=fuku">
+            <div>
+                <grey>副詞</grey>
+            </div>
+        </a>
+        <a id="review_mei" class="collection-item" href="/Tango?page=test&type=mei">
+            <div>
+                <grey>名詞</grey>
+            </div>
+        </a>
+        <a id="review_rentai" class="collection-item" href="/Tango?page=test&type=rentai">
+            <div>
+                <grey>連体詞</grey>
+            </div>
+        </a>
+    </div>
+    <% if (reviews.length > 1) { %>
+    <h5>测试历史</h5>
+    <div class="collection reviews">
+    <% for (var i = reviews.length - (no_today ? 1 : 2); i >= 0; i--) { %>
+        <a id="review_<%= i %>" class="collection-item" href="/Tango?page=test&time=<%= reviews[i].t %>">
+            <div class="right right-align">
+                <grey>已测试: &nbsp;</grey>
+                <span class="<%= second_color %>-text"><%= reviews[i].tested %> / <%= reviews[i].words.length %></span>
+                <% if (reviews[i].tested > 0) { %>
+                <div class="min-width">
+                    <grey>正确率: &nbsp;</grey>
+                    <span class="<%= second_color %>-text"><%= Math.round(100*reviews[i].correct/reviews[i].tested) %>%</span>
+                </div>
+                <% } %>
+            </div>
+            <div>
+                <grey><span class="hide-on-small-only"><%= reviews[i].y %>年</span><%= reviews[i].m %>月<%= reviews[i].d %>日</grey>
+            </div>
+        </a>
+    <% } %>
+    </div>
+    <% } %>
+
+    </main>
+    <div class="divider container"></div>
+
+    <%- include('common/commonjs'); %>
+    <script type="text/javascript">
+    function generateTest() {
+        window.location = "/Tango?page=generate_review&password=" + localStorage.password;
+    }
+    </script>
+
+</body>
+
+</html>
