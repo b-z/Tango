@@ -5,4 +5,6 @@ COPY requirements.txt /app
 RUN pip3 install -r requirements.txt
 COPY . /app
 
-CMD ["python", "app/main.py"]
+EXPOSE 80
+
+CMD ["make", "local-run"]
