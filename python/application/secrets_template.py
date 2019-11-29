@@ -1,0 +1,5 @@
+DB_IP = ''
+DB_PORT = ''
+DB_USER = ''
+DB_PASSWORD = ''
+DB_NAME = ''

@@ -23,3 +23,5 @@ legacy-nodejs/app/config.js
 *.data
 
 __pycache__/
+
+secrets.py
