@@ -15,7 +15,9 @@
 node_modules/
 *.data
 
-venv/
+env/
+.cache/
+.pytest_cache/
 
 legacy-nodejs/app/config.js
 *.data
