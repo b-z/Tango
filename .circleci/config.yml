@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build-nodejs:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - enter:
+          command: cd legacy-nodejs
+      - build:
+          command: make build
+
+  build-python:
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - ckeckout
+      - enter:
+          command: cd python
+      - build:
+          command: make deps
