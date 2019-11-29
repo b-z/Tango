@@ -25,7 +25,7 @@ class Data(object):
     DB = Database()
 
     @classmethod
-    def getList(self):
+    def get_list(self):
         collection = self.DB.client.words
         results = collection.find({})
         return results

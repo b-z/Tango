@@ -2,7 +2,7 @@ from .data import Data
 
 
 def tango(req):
-    words = Data.getList()
+    words = Data.get_list()
     words = list(map(lambda x: x['kanji'], words))
     return ', '.join(words)
 
