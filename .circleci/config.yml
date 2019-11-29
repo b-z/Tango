@@ -6,9 +6,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: cd legacy-nodejs
-      - run:
-          command: make build
+          command: cd legacy-nodejs && make build
 
   build-python:
     docker:
@@ -16,9 +14,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: cd python
-      - run:
-          command: make deps
+          command: cd python && make deps
 workflows:
   tango:
     jobs:
