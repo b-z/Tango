@@ -24,4 +24,5 @@ legacy-nodejs/app/config.js
 
 __pycache__/
 
-secrets_.py
+secrets.py
+secrets_template.py
