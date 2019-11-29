@@ -35,3 +35,4 @@ workflows:
     jobs:
       - build-nodejs
       - build-python
+      - test-python
