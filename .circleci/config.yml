@@ -29,9 +29,11 @@ jobs:
             cd python
             python3 -m venv venv
             . venv/bin/activate
+            make deps
             make test
 workflows:
   tango:
     jobs:
       - build-nodejs
       - build-python
+      - test-python
