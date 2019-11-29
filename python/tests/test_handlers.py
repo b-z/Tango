@@ -8,4 +8,9 @@ class TestHandlers:
 
         rv = testapp.get('/hello')
         assert rv.status_code == 200
-        print(rv.data)
+
+    def test_tango(self, testapp):
+        """ Test the / endpoint """
+
+        rv = testapp.get('/')
+        assert rv.status_code == 200
