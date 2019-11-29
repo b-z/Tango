@@ -1,14 +1,14 @@
 help:
 	@echo "\n\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'"
-	@echo "  create          create k8s deployment & service"
-	@echo "  apply           apply k8s config changes"
-	@echo "  deps            install dependencies using pip"
-	@echo "  local-run       run locally"
-	@echo "  build-run       build and run on minikube"
-	@echo "  run             run on minikube cluster"
-	@echo "  clean           remove unwanted files"
-	@echo "  lint            check style with flake8"
-	@echo "  test            run test using py.test"
+	@echo "\`  create          create k8s deployment & service '"
+	@echo "\`  apply           apply k8s config changes        '"
+	@echo "\`  deps            install dependencies using pip  '"
+	@echo "\`  local-run       run locally                     '"
+	@echo "\`  build-run       build and run on minikube       '"
+	@echo "\`  run             run on minikube cluster         '"
+	@echo "\`  clean           remove unwanted files           '"
+	@echo "\`  lint            check style with flake8         '"
+	@echo "\`  test            run test using py.test          '"
 	@echo "\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\n"
 
 create:
