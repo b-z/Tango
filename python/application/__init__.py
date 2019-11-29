@@ -1,13 +1,15 @@
 from flask import Flask
 
+from . import config, routes
+from .data import Data
+
 
 def create_app():
     app = Flask(__name__)
 
-    app.config['DEBUG'] = True
-
-    @app.route('/hello')
-    def hello_world():
-        return 'Hello, World!'
+    config.setup(app, config.DevelopmentConfig)
+    routes.setup(app)
+    Data.DB.setup(app)
+    Data.DB.connect()
 
     return app
