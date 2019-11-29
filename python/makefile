@@ -6,6 +6,9 @@ help:
 	@echo "  local-run       run locally"
 	@echo "  build-run       build and run on minikube"
 	@echo "  run             run on minikube cluster"
+	@echo "  clean           remove unwanted files"
+	@echo "  lint            check style with flake8"
+	@echo "  test            run test using py.test"
 	@echo "\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\n"
 
 create:
@@ -32,3 +35,12 @@ build-run:
 
 run:
 	minikube service tango-python-service
+
+clean:
+	./manage.py clean
+
+lint:
+	flake8 .
+
+test:
+	py.test tests

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-import os
-
-from flask_script import Manager, Server, Command
+from flask_script import Manager, Server
 from flask_script.commands import ShowUrls, Clean
 from application import create_app
 

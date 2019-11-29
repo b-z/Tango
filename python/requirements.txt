@@ -1,2 +1,4 @@
 Flask>=1.0
 Flask-Script>=2.0
+flake8>=2.4.0
+pytest>=3.0.5
