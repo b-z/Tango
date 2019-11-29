@@ -19,6 +19,17 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             make deps
+  test-python:
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd python
+            python3 -m venv venv
+            . venv/bin/activate
+            make test
 workflows:
   tango:
     jobs:
