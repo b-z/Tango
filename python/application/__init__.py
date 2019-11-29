@@ -1,16 +1,12 @@
 from flask import Flask
 
-# import secrets
-from . import config
+from . import config, routes
 
 
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object(config.DevelopmentConfig)
-
-    @app.route('/hello')
-    def hello_world():
-        return 'Hello, World!'
+    config.setup(app, config.DevelopmentConfig)
+    routes.setup(app)
 
     return app
