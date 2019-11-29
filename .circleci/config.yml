@@ -19,3 +19,8 @@ jobs:
           command: cd python
       - build:
           command: make deps
+workflows:
+  tango:
+    jobs:
+      - build-nodejs
+      - build-python
