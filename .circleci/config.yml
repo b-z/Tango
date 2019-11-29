@@ -5,9 +5,9 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - enter:
+      - run:
           command: cd legacy-nodejs
-      - build:
+      - run:
           command: make build
 
   build-python:
@@ -15,9 +15,9 @@ jobs:
       - image: circleci/python:latest
     steps:
       - ckeckout
-      - enter:
+      - run:
           command: cd python
-      - build:
+      - run:
           command: make deps
 workflows:
   tango:
