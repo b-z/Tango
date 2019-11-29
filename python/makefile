@@ -8,7 +8,7 @@ apply:
 
 local-run:
 	# export FLASK_APP=app/main.py && flask run
-	python3 app/main.py
+	python3 run.py
 
 run:
 	docker build -t tango-python . \
