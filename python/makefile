@@ -9,6 +9,7 @@ help:
 	@echo "\`  clean           remove unwanted files           '"
 	@echo "\`  lint            check style with flake8         '"
 	@echo "\`  test            run test using py.test          '"
+	@echo "\`  test-cov[-html] show test coverage [in html]    '"
 	@echo "\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\`'\n"
 
 create:
@@ -45,8 +46,8 @@ lint:
 test:
 	py.test tests
 
-test-coverage:
+test-cov:
 	py.test --cov=./ tests/
 
-test-coverage-html:
+test-cov-html:
 	py.test --cov=./ --cov-report=html tests/

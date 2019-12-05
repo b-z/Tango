@@ -4,6 +4,7 @@ from . import secrets
 class Config(object):
     DEBUG = True
     TESTING = False
+    SERVER_PORT = 80
     DB_IP = secrets.DB_IP
     DB_PORT = secrets.DB_PORT
     DB_USER = secrets.DB_USER
