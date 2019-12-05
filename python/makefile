@@ -44,3 +44,9 @@ lint:
 
 test:
 	py.test tests
+
+test-coverage:
+	py.test --cov=./ tests/
+
+test-coverage-html:
+	py.test --cov=./ --cov-report=html tests/

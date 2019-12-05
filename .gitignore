@@ -26,3 +26,6 @@ __pycache__/
 
 secrets.py
 secrets_template.py
+
+.coverage
+htmlcov/
