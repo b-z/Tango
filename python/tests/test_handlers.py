@@ -1,4 +1,5 @@
 import pytest
+import json
 
 
 @pytest.mark.usefixtures("testapp")
@@ -9,6 +10,14 @@ class TestHandlers:
         rv = testapp.get('/hello')
         assert rv.status_code == 200
         assert rv.data == b'Hello, world!'
+
+    def test_health(self, testapp):
+        """ Test the /health health check. """
+
+        rv = testapp.get('/health')
+        assert rv.status_code == 200
+        data = json.loads(rv.data.decode())
+        assert data['results'][0]['output'] == 'access ok'
 
     def test_tango(self, testapp):
         """ Test the / endpoint. """
