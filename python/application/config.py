@@ -10,6 +10,7 @@ class Config(object):
     DB_USER = secrets.DB_USER
     DB_PASSWORD = secrets.DB_PASSWORD
     DB_NAME = secrets.DB_NAME
+    SECRET_KEY = secrets.SECRET_KEY
 
 
 class ProductionConfig(Config):
