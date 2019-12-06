@@ -7,7 +7,6 @@ jobs:
       - checkout
       - run:
           command: cd legacy-nodejs && make build
-
   build-python:
     docker:
       - image: circleci/python:latest
@@ -36,4 +35,6 @@ workflows:
     jobs:
       - build-nodejs
       - build-python
-      - test-python
+      - test-python:
+          requires:
+            - build-python
