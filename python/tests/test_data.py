@@ -1,5 +1,5 @@
 import pytest
-from application import data
+from application.controllers import data
 
 
 @pytest.mark.usefixtures("testapp")

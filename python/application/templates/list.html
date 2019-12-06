@@ -5,6 +5,12 @@
     <title></title>
   </head>
   <body>
-    Hello, world!
+    <ul>
+    {% for word in data %}
+      <li>
+        {{ word['kanji'] }}
+      </li>
+    {% endfor %}
+    </ul>
   </body>
 </html>

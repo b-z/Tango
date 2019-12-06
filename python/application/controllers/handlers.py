@@ -1,10 +1,11 @@
+from flask import render_template
+
 from .data import Data
 
 
 def tango(req):
     words = Data.get_list()
-    words = list(map(lambda x: x['kanji'], words))
-    return ', '.join(words)
+    return render_template('list.html', data=words)
 
 
 def hello_world(req):
