@@ -41,7 +41,7 @@ clean:
 	./manage.py clean
 
 lint:
-	flake8 .
+	flake8 . --exclude __pycache__,venv
 
 test:
 	py.test tests
