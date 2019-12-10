@@ -4,6 +4,7 @@ import json
 
 @pytest.mark.usefixtures("testapp")
 class TestHandlers:
+
     def test_hello(self, testapp):
         """ Test the /hello endpoint. """
 
@@ -19,8 +20,10 @@ class TestHandlers:
         data = json.loads(rv.data.decode())
         assert data['results'][0]['output'] == 'access ok'
 
-    def test_tango(self, testapp):
+    @pytest.mark.parametrize('substring', ['<body>', '買う'])
+    def test_tango(self, testapp, substring):
         """ Test the / endpoint. """
 
         rv = testapp.get('/')
         assert rv.status_code == 200
+        assert rv.data.decode().find(substring) >= 0

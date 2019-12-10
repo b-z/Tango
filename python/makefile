@@ -44,7 +44,7 @@ lint:
 	flake8 . --exclude __pycache__,venv
 
 test:
-	py.test tests
+	py.test tests -s
 
 test-cov:
 	py.test --cov=./ tests/
