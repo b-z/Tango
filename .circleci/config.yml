@@ -7,7 +7,6 @@ jobs:
       - checkout
       - run:
           command: cd legacy-nodejs && make build
-
   build-python:
     docker:
       - image: circleci/python:latest
@@ -30,10 +29,13 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             make deps
+            make lint
             make test
 workflows:
   tango:
     jobs:
       - build-nodejs
       - build-python
-      - test-python
+      - test-python:
+          requires:
+            - build-python

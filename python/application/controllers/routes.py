@@ -1,4 +1,5 @@
 from flask import request
+from healthcheck import HealthCheck
 
 from . import handlers
 
@@ -20,3 +21,9 @@ def setup(app):
     @app.route('/hello')
     def hello_world():
         return handlers.hello_world(request)
+
+    def access_available():
+        return True, "access ok"
+
+    health = HealthCheck(app, "/health")
+    health.add_check(access_available)

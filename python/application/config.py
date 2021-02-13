@@ -4,11 +4,13 @@ from . import secrets
 class Config(object):
     DEBUG = True
     TESTING = False
+    SERVER_PORT = 80
     DB_IP = secrets.DB_IP
     DB_PORT = secrets.DB_PORT
     DB_USER = secrets.DB_USER
     DB_PASSWORD = secrets.DB_PASSWORD
     DB_NAME = secrets.DB_NAME
+    SECRET_KEY = secrets.SECRET_KEY
 
 
 class ProductionConfig(Config):

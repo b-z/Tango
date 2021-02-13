@@ -26,3 +26,8 @@ __pycache__/
 
 secrets.py
 secrets_template.py
+
+.coverage
+htmlcov/
+python/dashboard_config.cfg
+python/flask_monitoringdashboard.db

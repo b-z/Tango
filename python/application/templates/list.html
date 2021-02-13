@@ -3,8 +3,23 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
   </head>
   <body>
-    Hello, world!
+    <main class="container">
+      <div class="collection">
+      {%- for word in data -%}
+      {%-   if word.furansugo != 'true' -%}
+        <a class="collection-item">
+        {{ '文法【' if word.bunpou == 'true' else '' }}
+        {{ word.kanji or word.hiragana }}
+        {{ '】' if word.bunpou == 'true' else '' }}
+        </a>
+      {%-   endif -%}
+      {%- endfor -%}
+      </div>
+    </main>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
   </body>
 </html>
